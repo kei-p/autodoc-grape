@@ -6,4 +6,5 @@ gemspec
 group :test do
   gem "pry-rails"
   gem "rspec-rails"
+  gem "grape"
 end
