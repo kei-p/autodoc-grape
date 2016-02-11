@@ -1,4 +1,5 @@
 require "autodoc/grape/version"
+require "autodoc"
 
 module Autodoc
   module Grape
