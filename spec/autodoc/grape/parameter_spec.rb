@@ -1,12 +1,15 @@
 class Dummy::API < Grape::API
   params do
-    requires :number, type: Integer
+    optional :number, type: Integer
     requires :text, type: String
+    optional :restricted_values, type: Integer, values: [1,2,3]
+    optional :restricted_values_range, type: Integer, values: -10..+10
+    optional :desc_value, type: Integer, desc: 'description'
 
-    requires :hash, type: Hash do
-      requires :hash_attr, type: Integer
-      requires :deep_hash, type: Hash do
-        requires :deep_hash_attr, type: Integer
+    optional :hash, type: Hash do
+      optional :hash_attr, type: Integer
+      optional :deep_hash, type: Hash do
+        optional :deep_hash_attr, type: Integer
       end
     end
   end
@@ -28,7 +31,22 @@ describe Autodoc::Grape::Document::Parameter do
 
     context "text" do
       let(:validator_name) { "text" }
-      it { expect(subject).to eq("* text String") }
+      it { expect(subject).to eq("* text String (required)") }
+    end
+
+    context "restricted_values" do
+      let(:validator_name) { "restricted_values" }
+      it { expect(subject).to eq("* restricted_values Integer (only: `[1, 2, 3]`)") }
+    end
+
+    context "restricted_values_range" do
+      let(:validator_name) { "restricted_values_range" }
+      it { expect(subject).to eq("* restricted_values_range Integer (only: `-10..10`)") }
+    end
+
+    context "desc_value" do
+      let(:validator_name) { "desc_value" }
+      it { expect(subject).to eq("* desc_value Integer - description") }
     end
 
     context "hash" do

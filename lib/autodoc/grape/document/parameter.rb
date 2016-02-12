@@ -26,16 +26,31 @@ module Autodoc
           nest_key_names.last
         end
 
-        def rule
+        def options
           validator[1]
         end
 
         def body
-          "#{indent}* #{key} #{rule[:type]}"
+          "#{indent}* #{key} #{options[:type]}"
         end
 
         def payload
-          ""
+          string = ""
+          string << " (#{assets.join(', ')})" if assets.any?
+          string << " - #{options[:desc]}" if options[:desc]
+          string
+        end
+
+        def required
+          "required" if options[:required]
+        end
+
+        def assets
+          @assets ||= [required, only].compact
+        end
+
+        def only
+          "only: `#{options[:values].inspect}`" if options[:values]
         end
       end
     end
