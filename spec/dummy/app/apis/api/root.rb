@@ -7,6 +7,9 @@ module API
 
       params do
         requires :id, type: Integer
+        optional :hash, type: Hash do
+          requires :attr, type: String
+        end
       end
       get ':id' do
         {

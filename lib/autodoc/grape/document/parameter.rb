@@ -14,8 +14,16 @@ module Autodoc
 
         private
 
+        def indent
+          " " * ( nest_key_names.count - 1 )
+        end
+
+        def nest_key_names
+          validator[0].gsub(%r{\[(.*?)\]}, '__\1').split('__')
+        end
+
         def key
-          validator[0]
+          nest_key_names.last
         end
 
         def rule
@@ -23,7 +31,7 @@ module Autodoc
         end
 
         def body
-          "* #{key} #{rule[:type]}"
+          "#{indent}* #{key} #{rule[:type]}"
         end
 
         def payload
