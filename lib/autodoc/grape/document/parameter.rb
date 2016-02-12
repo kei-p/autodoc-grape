@@ -46,11 +46,15 @@ module Autodoc
         end
 
         def assets
-          @assets ||= [required, only].compact
+          @assets ||= [required, only, default_value].compact
         end
 
         def only
           "only: `#{options[:values].inspect}`" if options[:values]
+        end
+
+        def default_value
+          "default: `#{options[:default].inspect}`" if options[:default]
         end
       end
     end

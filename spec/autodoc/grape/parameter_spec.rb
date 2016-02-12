@@ -5,6 +5,7 @@ class Dummy::API < Grape::API
     optional :restricted_values, type: Integer, values: [1,2,3]
     optional :restricted_values_range, type: Integer, values: -10..+10
     optional :desc_value, type: Integer, desc: 'description'
+    optional :default_value, type: Integer, default: 0
 
     optional :hash, type: Hash do
       optional :hash_attr, type: Integer
@@ -47,6 +48,10 @@ describe Autodoc::Grape::Document::Parameter do
     context "desc_value" do
       let(:validator_name) { "desc_value" }
       it { expect(subject).to eq("* desc_value Integer - description") }
+    end
+    context "default_value" do
+      let(:validator_name) { "default_value" }
+      it { expect(subject).to eq("* default_value Integer (default: `0`)") }
     end
 
     context "hash" do
