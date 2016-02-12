@@ -7,6 +7,8 @@ class Dummy::API < Grape::API
     optional :desc_value, type: Integer, desc: 'description'
     optional :default_value, type: Integer, default: 0
 
+    optional :array, type: Array[Integer]
+
     optional :hash, type: Hash do
       optional :hash_attr, type: Integer
       optional :deep_hash, type: Hash do
@@ -52,6 +54,11 @@ describe Autodoc::Grape::Document::Parameter do
     context "default_value" do
       let(:validator_name) { "default_value" }
       it { expect(subject).to eq("* default_value Integer (default: `0`)") }
+    end
+
+    context "array" do
+      let(:validator_name) { "array" }
+      it { expect(subject).to eq("* array [Integer]") }
     end
 
     context "hash" do
