@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "autodoc-grape"
   spec.version       = Autodoc::Grape::VERSION
   spec.authors       = ["Keisuke Ishizawa"]
-  spec.email         = ["k_ishizawa@sfidante.co.jp"]
+  spec.email         = ["muddyapesjm66@gmail.com"]
 
   spec.summary       = "Autodoc for Grape API specs."
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/kei-p/autodoc-grape"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
