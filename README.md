@@ -22,7 +22,7 @@ params do
 end
 ```
 
-### Genarated Parameter Section
+### Generated Parameter Section
 ```md
 ### Parameters
 * id Integer (required)
