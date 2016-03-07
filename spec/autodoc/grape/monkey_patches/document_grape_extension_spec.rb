@@ -52,4 +52,24 @@ describe DocumentGrapeExtension, type: :request do
       expect(subject).to eq(route_info)
     end
   end
+
+  describe '#method' do
+    subject do
+      document.send(:method)
+    end
+
+    it do
+      expect(subject).to eq('GET')
+    end
+  end
+
+  describe '#path' do
+    subject do
+      document.send(:path)
+    end
+
+    it do
+      expect(subject).to eq('/api/items/:id')
+    end
+  end
 end

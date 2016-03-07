@@ -5,10 +5,22 @@ module DocumentGrapeExtension
     !!(grape_request? && validators) || super
   end
 
+  def method
+    grape_request? ? grape_options[:method] : super
+  end
+
+  def path
+    grape_request? ? grape_options[:path].gsub(/\(.*\)$/,'') : super
+  end
+
   def route_info
     @route_info ||= begin
       grape_request? ? request.env["rack.routing_args"][:route_info] : nil
     end
+  end
+
+  def grape_options
+    route_info.instance_variable_get(:@options)
   end
 
   def validators
