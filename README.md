@@ -1,6 +1,6 @@
 # Autodoc::Grape
 
-Extend [r7kamura/autodoc](https:/github.com/r7kamura/autodoc/) to generate documention for [Grape API](https://github.com/ruby-grape/grape).
+Extend [r7kamura/autodoc](https://github.com/r7kamura/autodoc) to generate documention for [Grape API](https://github.com/ruby-grape/grape).
 
 ## Installation
 
