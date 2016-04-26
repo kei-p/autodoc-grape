@@ -6,7 +6,9 @@ module DocumentsGrapeExtension
   end
 
   def grape_request?(request)
-    defined?(Grape) && request.env["rack.routing_args"][:route_info].instance_of?(Grape::Route) rescue false
+    return false unless defined?(Grape)
+    routing_args = request.env["grape.routing_args"] || request.env["rack.routing_args"]
+    routing_args[:route_info].instance_of?(Grape::Route) rescue false
   end
 end
 
