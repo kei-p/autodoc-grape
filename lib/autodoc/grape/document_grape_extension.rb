@@ -15,8 +15,7 @@ module DocumentGrapeExtension
 
   def route_info
     @route_info ||= begin
-      routing_args = request.env["grape.routing_args"] || request.env["rack.routing_args"]
-      routing_args[:route_info]
+      request.env["rack.routing_args"][:route_info]
     end
   end
 
