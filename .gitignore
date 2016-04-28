@@ -20,3 +20,4 @@ spec/dummy/tmp/
 spec/reports
 tmp
 vendor/bundle
+gemfiles
