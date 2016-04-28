@@ -1,5 +1,5 @@
 module DocumentGrapeExtension
- private
+  private
 
   def has_validators?
     !!validators
@@ -10,17 +10,12 @@ module DocumentGrapeExtension
   end
 
   def path
-    grape_options[:path].gsub(/\(.*\)$/,'')
-  end
-
-  def route_info
-    @route_info ||= begin
-      request.env["rack.routing_args"][:route_info]
+    path_pattern = if Grape::VERSION.to_f >= 0.16
+      grape_pattern.path
+    else
+      grape_options[:path]
     end
-  end
-
-  def grape_options
-    route_info.instance_variable_get(:@options)
+    path_pattern.gsub(/\(.*\)$/,'')
   end
 
   def validators
@@ -29,5 +24,23 @@ module DocumentGrapeExtension
 
   def parameters
     validators.map { |validator| Autodoc::Grape::Document::Parameter.new(validator) }.join("\n")
+  end
+
+  def route_info
+    @route_info ||= begin
+      if Grape::VERSION.to_f >= 0.16
+        request.env["grape.routing_args"][:route_info]
+      else
+        request.env["rack.routing_args"][:route_info]
+      end
+    end
+  end
+
+  def grape_options
+    route_info.instance_variable_get(:@options)
+  end
+
+  def grape_pattern
+    route_info.instance_variable_get(:@pattern)
   end
 end
