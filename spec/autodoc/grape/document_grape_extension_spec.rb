@@ -35,20 +35,6 @@ describe DocumentGrapeExtension, type: :request do
   let(:full_description) { '' }
   let(:file_path) { '' }
 
-  let(:route_info) do
-    API::Root.routes.find { |route| Regexp.new("/api/items/:id").match(route.instance_variable_get(:@options)[:path]) }
-  end
-
-  describe '#route_info' do
-    subject do
-      document.send(:route_info)
-    end
-
-    it do
-      expect(subject).to eq(route_info)
-    end
-  end
-
   describe '#method' do
     subject do
       document.send(:method)
