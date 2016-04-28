@@ -6,7 +6,15 @@ module DocumentsGrapeExtension
   end
 
   def grape_request?(request)
-    defined?(Grape) && request.env["rack.routing_args"][:route_info].instance_of?(Grape::Route) rescue false
+    begin
+      if Grape::VERSION.to_f >= 0.16
+        request.env["grape.routing_args"][:route_info].instance_of?(Grape::Router::Route)
+      else
+        request.env["rack.routing_args"][:route_info].instance_of?(Grape::Route)
+      end
+    rescue
+      false
+    end
   end
 end
 
