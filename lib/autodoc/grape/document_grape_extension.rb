@@ -1,21 +1,28 @@
 module DocumentGrapeExtension
-  private
-
-  def has_validators?
-    !!validators
+  def path_pattern
+    if Grape::VERSION.to_f >= 0.16
+      grape_pattern.path
+    else
+      grape_options[:path]
+    end
   end
+
+  private
 
   def method
     grape_options[:method]
   end
 
+  def has_validators?
+    !!validators
+  end
+
   def path
-    path_pattern = if Grape::VERSION.to_f >= 0.16
-      grape_pattern.path
+    if Autodoc.configuration.grape_path_arrange
+      Autodoc.configuration.grape_path_arrange.call(self)
     else
-      grape_options[:path]
+      path_pattern
     end
-    path_pattern.gsub(/\(.*\)$/,'')
   end
 
   def validators

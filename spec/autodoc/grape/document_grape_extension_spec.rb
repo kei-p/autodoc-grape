@@ -46,12 +46,38 @@ describe DocumentGrapeExtension, type: :request do
   end
 
   describe '#path' do
-    subject do
-      document.send(:path)
+    after do
+      Autodoc.configuration.grape_path_arrange = nil
     end
 
-    it do
-      expect(subject).to eq('/api/items/:id')
+    describe 'default' do
+      before do
+        Autodoc.configuration.grape_path_arrange = nil
+      end
+
+      subject do
+        document.send(:path)
+      end
+
+      it do
+        expect(subject).to eq('/api/items/:id(.json)')
+      end
+    end
+
+    describe 'arrange' do
+      before do
+        Autodoc.configuration.grape_path_arrange = -> (document) {
+          document.path_pattern.gsub("(.json)",'')
+        }
+      end
+
+      subject do
+        document.send(:path)
+      end
+
+      it do
+        expect(subject).to eq('/api/items/:id')
+      end
     end
   end
 end
